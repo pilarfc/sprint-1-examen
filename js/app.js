@@ -6,29 +6,24 @@ function obtenerListaEstudiantes() {
   return estudiantes;
 }
 
+
 function agregarEstudiante() {
     // TO DO: Preguntar al usuario por el nombre, puntos técnicos y puntos de HSE de un estudiante
     // Hint: El estudiante debe ser agregado a la lista de estudiantes
     // TO DO: Retornar el estudiante recientemente creado
 
+    var nombre = prompt("Ingresa el nombre del alumno:");
+    var puntosTecnicos = prompt ("Ingresa el puntaje técnico:");
+    var puntosHSE = prompt ("Ingresa los puntos HSE:");
 
-      var nombre = prompt("Ingresa el nombre completo del estudiante:");
-      var puntosTecnicos = prompt ("Ingresa los puntos técnicos obtenidos:");
-      var puntosHSE = prompt ("Ingresa los puntos HSE obtenidos:");
-
-
-      function Estudiante (nombre, puntosTecnicos, puntosHSE) {
-        this.nombre = nombre;
-        this.puntosTecnicos = puntosTecnicos;
-        this.puntosHSE = puntosHSE;
-      };
-
-        var alumno = new Estudiante (nombre, puntosTecnicos, puntosHSE);
-        estudiantes.push(alumno);
-        return alumno;
-
-
-      }
+    var alumno = {
+         nombre : nombre,
+         puntosTecnicos: puntosTecnicos,
+         puntosHSE: puntosHSE
+   }
+       estudiantes.push(alumno);
+       return alumno;
+}
 
 
 function mostrar(estudiante) {
@@ -47,30 +42,18 @@ function mostrar(estudiante) {
     resultado += "</div>";
     return resultado;
 
-
-
 }
 
 function mostrarLista(estudiantes) {
     // TO DO: Iterar la lista del estudiantes para devolverlos en el formato que usa la función mostrar(estudiante)
     // Retornar el template de todos los estudiantes
-      var resultado = "";
-      var largo = estudiantes.length
-    for (var indice = 0; indice < largo; indice++){
 
-      resultado += "<div class='row'>";
-      resultado += "<div class='col m12'>";
-      resultado += "<div class='card blue-grey darken-1'>";
-      resultado += "<div class='card-content white-text'>";
-      resultado += "<p><strong>Nombre:</strong> " + estudiantes[indice].nombre + "</p>";  // Aqui va punto en estudiante
-      resultado += "<p><strong>Puntos Técnicos:</strong> " + estudiantes[indice].puntosTecnicos + "</p>"; // Aquí va punto en estudiante
-      resultado += "<p><strong>Puntos HSE:</strong> " + estudiantes[indice].puntosHSE + "</p>"; // Aquí va punto en estudiante
-      resultado += "</div>";
-      resultado += "</div>";
-      resultado += "</div>";
-      resultado += "</div>";
-    }
-       return resultado;
+    var busqueda = "";
+
+  estudiantes.forEach(function(estudianteMostrado) {
+    busqueda += mostrar(estudianteMostrado)
+  });
+   return busqueda;
 }
 
 function buscar(nombre, estudiantes) {
@@ -78,14 +61,26 @@ function buscar(nombre, estudiantes) {
     // Retornar el objeto del estudiante buscado
     // Nota: NO IMPORTA SI EL USUARIO ESCRIBE EL NOMBRE EN MAYÚSCULAS O MINÚSCULAS
 
+    var estudiantesFiltrados = estudiantes.filter(function(estudiantePorBuscar) {
+      return estudiantePorBuscar.nombre.toLowerCase() == nombre.toLowerCase();
+    });
+
+ return estudiantesFiltrados;
 }
 
 function topTecnico(estudiantes) {
     // TO DO: Retornar el arreglo de estudiantes ordenado por puntaje técnico de mayor a menor
 
+ var filtroTecnicos = estudiantes.sort(function(alumnoA, alumnoB) {
+  return alumnoB.puntosTecnicos - alumnoA.puntosTecnicos;
+});
+  return filtroTecnicos;
 }
 
 function topHSE(estudiantes) {
     // TO DO: Retornar el arreglo de estudiantes ordenado por puntaje de HSE de mayor a menor
-
+    var filtroHSE = estudiantes.sort(function(alumnoA, alumnoB) {
+     return alumnoB.puntosHSE - alumnoA.puntosHSE;
+    });
+     return filtroHSE;
 }
